@@ -1,0 +1,7 @@
+secret.txt
+.env
+/db-data/
+/pgadmin-data/
+aula/*
+server/node_modules/*
+requisitions.rest

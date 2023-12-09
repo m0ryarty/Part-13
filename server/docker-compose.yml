@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-moryarty}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-N@tasha1}
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"    
+    restart: unless-stopped
+
+  server:
+    depends_on: 
+      - postgres    
+    image: blog_server
+    build: .    
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 3000:3000      
+    environment: 
+      - PORT=3000
+      - PGDATABASE=postgres 
+      - PGUSER=moryarty
+      - PGPASSWORD=N@tasha1
+      - PGHOST=postgres
+    expose:
+      - "3000"
+    command: npm run dev
+    
+        
+
+volumes:
+    postgres:
+    
+      
+    
